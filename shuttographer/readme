@@ -1,0 +1,4 @@
+rosservice call /controller_manager/switch_controller "start_controllers: ['joint_group_controller']
+ strictness: 1"
+
+azure driver.launch robot_state_publisher to kinect_state_publisher
