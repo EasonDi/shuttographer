@@ -8,6 +8,8 @@ from sensor_msgs.msg import JointState
 import tf2_ros
 import tf2_geometry_msgs
 import numpy as np
+import tf.transformations as tft
+from scipy.optimize import least_squares
 from urdf_parser_py.urdf import URDF
 from visualization_msgs.msg import MarkerArray
 from std_msgs.msg import Bool
@@ -112,7 +114,7 @@ class ExpertNode(object):
         self.tf_buffer = tf2_ros.Buffer(rospy.Duration(1200.0))  # tf buffer length
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer)
 
-        self.nose_detected = False
+        self.nose_detected = True
 
         # joint subscriber
         rospy.Subscriber('/joint_states', JointState, self.joints_callback, queue_size=5)
@@ -156,16 +158,15 @@ class ExpertNode(object):
         :return: target in baselink, transform from base_link to biceps, transform from biceps to camera
         """
 
-        p = [pose_transformed.pose.position.x,
-             pose_transformed.pose.position.y,
-             pose_transformed.pose.position.z]
+        p = [pose_transformed[0],
+             pose_transformed[1],
+             pose_transformed[2]]
 
         # get transform from base link to camera link (base_link -> biceps_link and biceps_link -> camera_link)
         try:
             transform = self.tf_buffer.lookup_transform(self.biceps_link,
                                                         self.base_link,  # source frame
-                                                        msg.header.stamp,
-                                                        # get the transform at the time the pose was generated
+                                                        rospy.Time(0),
                                                         rospy.Duration(1.0))  # wait for 1 second
             T1 = transform_msg_to_T(transform)
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as e:
@@ -175,8 +176,7 @@ class ExpertNode(object):
         try:
             transform = self.tf_buffer.lookup_transform(self.camera_link,
                                                         self.biceps_link,  # source frame
-                                                        msg.header.stamp,
-                                                        # get the transform at the time the pose was generated
+                                                        rospy.Time(0),
                                                         rospy.Duration(1.0))  # wait for 1 second
             T2 = transform_msg_to_T(transform)
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as e:
@@ -242,7 +242,7 @@ class ExpertNode(object):
             for marker in msg.markers:
                 #track the nose position
                 if marker.id % 100 == 27:
-                    pos_transformed = tf2_geometry_msgs.do_transform_pose(marker.pose, trans)
+                    pos_transformed = tf2_geometry_msgs.do_transform_pose(marker, trans)
                     position = [pos_transformed.pose.position.x, pos_transformed.pose.position.y, pos_transformed.pose.position.z]
                     if not closest_joint:
                         closest_joint = position
