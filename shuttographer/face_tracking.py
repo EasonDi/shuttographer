@@ -235,7 +235,7 @@ class ExpertNode(object):
             rospy.logwarn("Joint positions are unknown. Waiting to receive joint states.")
             return
 
-        trans = self.tf_buffer.lookup_transform('rgb_camera_link', 'base_footprint', rospy.Time(0), rospy.Duration(1))
+        trans = self.tf_buffer.lookup_transform( 'base_footprint', 'rgb_camera_link', rospy.Time(0), rospy.Duration(1))
         closest_joint = []
         #track the closest body joint
         if self.nose_detected:
@@ -258,9 +258,10 @@ class ExpertNode(object):
             else:
                 # upack results
                 new_j1, new_j3 = joint_angles
-
+            print(position)
+            print(joint_angles)
             msg = Float64MultiArray()
-            msg.data = [float(new_j1), float(0.0), float(new_j3), float(0.0)]
+            msg.data = [float(new_j1), float(-1.5), float(new_j3), float(0.0)]
             self.joint_pub.publish(msg)
         else:
             msg = Float64MultiArray()
