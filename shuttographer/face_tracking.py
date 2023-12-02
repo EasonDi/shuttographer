@@ -115,6 +115,7 @@ class ExpertNode(object):
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer)
 
         self.nose_detected = True
+        self.num_body = -1
 
         # joint subscriber
         rospy.Subscriber('/joint_states', JointState, self.joints_callback, queue_size=5)
@@ -236,33 +237,25 @@ class ExpertNode(object):
             return
 
         trans = self.tf_buffer.lookup_transform( 'base_footprint', 'rgb_camera_link', rospy.Time(0), rospy.Duration(1))
-        closest_joint = []
         #track the closest body joint
+        self.nose_detected = not (len(msg.markers) == 0)
         if self.nose_detected:
             for marker in msg.markers:
                 #track the nose position
                 if marker.id % 100 == 27:
-                    pos_transformed = tf2_geometry_msgs.do_transform_pose(marker, trans)
-                    position = [pos_transformed.pose.position.x, pos_transformed.pose.position.y, pos_transformed.pose.position.z]
-                    if not closest_joint:
-                        closest_joint = position
-                    else:
-                        closest = np.sqrt(closest_joint[0] ** 2 + closest_joint[1] ** 2 + closest_joint[2] ** 2)
-                        current_dist = np.sqrt(position[0] ** 2 + position[1] ** 2 + position[2] ** 2)
-                        if closest > current_dist:
-                            closest_joint = position
-            joint_angles = self.compute_joints_position(position, self.current_pose[0], self.current_pose[2])
-            if joint_angles is None:
-                # we are done. the node might not be ready yet...
-                return
-            else:
-                # upack results
-                new_j1, new_j3 = joint_angles
-            print(position)
-            print(joint_angles)
-            msg = Float64MultiArray()
-            msg.data = [float(new_j1), float(-1.5), float(new_j3), float(0.0)]
-            self.joint_pub.publish(msg)
+                    if self.num_body == -1:
+                        self.num_body = int(marker.id / 100)
+                    elif int(marker.id / 100) == self.num_body:
+                        pos_transformed = tf2_geometry_msgs.do_transform_pose(marker, trans)
+                        position = [pos_transformed.pose.position.x, pos_transformed.pose.position.y, pos_transformed.pose.position.z]
+                        joint_angles = self.compute_joints_position(position, self.current_pose[0], self.current_pose[2])
+                        if joint_angles is None:
+                            return
+                        else:
+                            new_j1, new_j3 = joint_angles
+                            msg = Float64MultiArray()
+                            msg.data = [float(new_j1), float(-1.5), float(new_j3), float(0.0)]
+                            self.joint_pub.publish(msg)
         else:
             msg = Float64MultiArray()
             msg.data = [float(0.0), float(-1.5), float(-1.5), float(0.0)]
