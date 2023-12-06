@@ -116,6 +116,8 @@ class ExpertNode(object):
 
         self.nose_detected = True
         self.num_body = -1
+        self.person_in_frame = False
+
 
         # joint subscriber
         rospy.Subscriber('/joint_states', JointState, self.joints_callback, queue_size=5)
@@ -239,12 +241,14 @@ class ExpertNode(object):
         trans = self.tf_buffer.lookup_transform( 'base_footprint', 'rgb_camera_link', rospy.Time(0), rospy.Duration(1))
         #track the closest body joint
         self.nose_detected = not (len(msg.markers) == 0)
+        self.person_in_frame = False
         if self.nose_detected:
             for marker in msg.markers:
                 #track the nose position
                 if marker.id % 100 == 27:
-                    if self.num_body == -1:
+                    if self.num_body == -1 and not marker.pose is None:
                         self.num_body = int(marker.id / 100)
+                        self.person_in_frame = True
                     elif int(marker.id / 100) == self.num_body:
                         pos_transformed = tf2_geometry_msgs.do_transform_pose(marker, trans)
                         position = [pos_transformed.pose.position.x, pos_transformed.pose.position.y, pos_transformed.pose.position.z]
@@ -256,7 +260,15 @@ class ExpertNode(object):
                             msg = Float64MultiArray()
                             msg.data = [float(new_j1), float(-1.5), float(new_j3), float(0.0)]
                             self.joint_pub.publish(msg)
+                            self.person_in_frame = True
+            if not self.person_in_frame:
+                self.num_body = -1
+                msg = Float64MultiArray()
+                msg.data = [float(0.0), float(-1.5), float(-1.5), float(0.0)]
+                self.joint_pub.publish(msg)
+                
         else:
+            self.num_body = -1
             msg = Float64MultiArray()
             msg.data = [float(0.0), float(-1.5), float(-1.5), float(0.0)]
             self.joint_pub.publish(msg)
