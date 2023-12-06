@@ -1,3 +1,5 @@
+import torch
+import matplotlib.pyplot as plt
 
 def plot_accuracies(time, train_acc, test_acc, val_acc=None, lr=None):
   plt.plot(time, train_acc, c='red', label='training accuracy', marker='x')
@@ -11,7 +13,7 @@ def plot_accuracies(time, train_acc, test_acc, val_acc=None, lr=None):
   plt.legend()
   plt.show()
 
-def save_plots(train_err, valid_err, train_loss, valid_loss):
+def save_plots(train_acc, valid_acc, train_loss, valid_loss):
     """
     Function to save the loss and accuracy plots to disk.
     """
@@ -19,16 +21,16 @@ def save_plots(train_err, valid_err, train_loss, valid_loss):
     plt.figure(figsize=(10, 7))
     plt.plot(
         train_acc, color='green', linestyle='-', 
-        label='train error'
+        label='train acc'
     )
     plt.plot(
         valid_acc, color='blue', linestyle='-', 
-        label='validataion error'
+        label='validataion acc'
     )
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
-    plt.savefig('/content/drive/MyDrive/CPSC559/final_project/outputs/error.png')
+    plt.savefig('/home/bk632/plots/pem_acc.png')
     
     # loss plots
     plt.figure(figsize=(10, 7))
@@ -43,7 +45,7 @@ def save_plots(train_err, valid_err, train_loss, valid_loss):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.savefig('/content/drive/MyDrive/CPSC559/final_project/outputs/loss.png')
+    plt.savefig('/home/bk632/plots/pem_loss.png')
 
 def save_model(epochs, model, optimizer, criterion):
     """
@@ -54,7 +56,7 @@ def save_model(epochs, model, optimizer, criterion):
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
                 'loss': criterion,
-                }, '/content/drive/MyDrive/CPSC559/final_project/outputs/model.pth')
+                }, '/home/bk632/models/portrait_model.pth')
 
 def get_default_device():
     if torch.cuda.is_available():

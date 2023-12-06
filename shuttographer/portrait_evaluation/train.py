@@ -3,6 +3,7 @@ import torch
 import pandas as pd
 import numpy as np
 import torchvision
+import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, random_split, DataLoader
 import matplotlib.pyplot as plt
@@ -22,26 +23,27 @@ import argparse
 def train(model, trainloader, optimizer, criterion):
   model.train()
   running_loss = 0.0
-  total_error = 0
+  total_correct = 0
   counter = 0
   for inputs, labels in trainloader:
     counter += 1
     inputs, labels = inputs.to(device), labels.float().to(device)
     optimizer.zero_grad()
     outputs = model(inputs)
-    loss = criterion(outputs, labels.unsqueeze(1))
+    loss = criterion(outputs, labels)
     running_loss += loss.item()
-    total_error += torch.abs(outputs.data.flatten() - labels).sum().item()
+    preds, correct = torch.max(outputs, 1)[1], torch.max(labels, 1)[1]
+    total_correct += (preds==correct).sum().item()
     loss.backward()
     optimizer.step()
   epoch_loss = running_loss/counter
-  epoch_error = total_error/len(trainloader.dl.dataset)
-  return epoch_loss, epoch_error
+  epoch_acc = total_correct/len(trainloader.dl.dataset)
+  return epoch_loss, epoch_acc
 
 def validate(model, testloader, criterion):
     model.eval()
     running_loss = 0.0
-    total_error = 0
+    total_correct = 0
     counter = 0
     for inputs, labels in testloader:
       counter += 1
@@ -49,21 +51,22 @@ def validate(model, testloader, criterion):
       # forward pass
       outputs = model(inputs)
       # calculate the loss
-      loss = criterion(outputs, labels.unsqueeze(1))
+      loss = criterion(outputs, labels)
       running_loss += loss.item()
       # calculate the accuracy
-      total_error += torch.abs(outputs.data.flatten() - labels).sum().item()
+      preds, correct = torch.max(outputs, 1)[1], torch.max(labels, 1)[1]
+      total_correct += (preds==correct).sum().item()
         
     # loss and accuracy for the complete epoch
     epoch_loss = running_loss / counter
-    epoch_error = total_error/len(testloader.dl.dataset)
-    return epoch_loss, epoch_error
+    epoch_acc = total_correct/len(testloader.dl.dataset)
+    return epoch_loss, epoch_acc
 
 if __name__=="__main__":
     batch_size = 64
 
     # Create DataLoaders
-    train_dataset, val_dataset, test_dataset = get_datasets('placeholder')
+    train_dataset, val_dataset, test_dataset = get_datasets('/home/bk632/portrait_data/')
     train_dl = DataLoader(train_dataset, batch_size, shuffle=True, num_workers=2, pin_memory=True)
     val_dl = DataLoader(val_dataset, batch_size*2, num_workers=2, pin_memory=True)
     test_dl = DataLoader(test_dataset, batch_size*2, num_workers=2, pin_memory=True)
@@ -85,9 +88,10 @@ if __name__=="__main__":
     device = ('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Computation device: {device}\n")
 
-    model = QualityModel().to(device)
-    optimizer = optim.Adam(model.parameters(), lr=lr)
-    criterion = nn.MSELoss()
+    model = QualityClassifier()
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
+
 
     # Training loop
     train_loss, valid_loss = [], []
@@ -95,14 +99,14 @@ if __name__=="__main__":
 
     for epoch in range(epochs):
         print(f"[INFO]: Epoch {epoch+1} of {epochs}")
-        train_epoch_loss, train_epoch_error = train(model, train_dl, optimizer, criterion)
-        valid_epoch_loss, valid_epoch_error = validate(model, val_dl, criterion)
+        train_epoch_loss, train_epoch_acc = train(model, train_dl, optimizer, criterion)
+        valid_epoch_loss, valid_epoch_acc = validate(model, val_dl, criterion)
         train_loss.append(train_epoch_loss)
         valid_loss.append(valid_epoch_loss)
-        train_acc.append(train_epoch_error)
-        valid_acc.append(valid_epoch_error)
-        print(f"Training loss: {train_epoch_loss:.3f}, training error: {train_epoch_error:.3f}")
-        print(f"Validation loss: {valid_epoch_loss:.3f}, validation error: {valid_epoch_error:.3f}")
+        train_acc.append(train_epoch_acc)
+        valid_acc.append(valid_epoch_acc)
+        print(f"Training loss: {train_epoch_loss:.3f}, training acc: {train_epoch_acc:.3f}")
+        print(f"Validation loss: {valid_epoch_loss:.3f}, validation acc: {valid_epoch_acc:.3f}")
         print('-'*50)
 
     # save the trained model weights
