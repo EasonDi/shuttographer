@@ -14,9 +14,9 @@
     </include>
 
 
-    <node pkg="rosservice" type="rosservice" name="shutter_serv" args="call /controller_manager/switch_controller '{start_controllers: ['joint_group_controller'], stop_controllers: [], strictness: 1}'"/>
+    <exec command="rosservice" args="call /controller_manager/switch_controller '{start_controllers: ['joint_group_controller'], stop_controllers: [], strictness: 1}'" />
 
-    <!-- publish transform -->
+
     <node name="my_static_tf2_broadcaster" pkg="shuttographer" type="transform_msg.py">
     </node>
 
