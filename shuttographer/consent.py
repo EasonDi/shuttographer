@@ -18,7 +18,7 @@ import simpleaudio as sa
 def play_wav(filename):
     wave_obj = sa.WaveObject.from_wave_file(filename)
     play_obj = wave_obj.play()
-    play_obj.wait_done()  # Wait until sound has finished playing
+    play_obj.wait_done()
 
 
 
@@ -45,7 +45,7 @@ class ConsentNode:
     
     def callback(self, new_person):
         if new_person.data:
-            play_wav('/home/jr2683/catkin_ws/Shutter.wav')
+            play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/Shutter.wav')
             # Replace with microphone and GPT API call
             print('consent played')
             self.record_trigger.publish(True)

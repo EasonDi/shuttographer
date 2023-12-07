@@ -41,20 +41,20 @@ class AudioRecorder:
         self.audio_frames.append(msg.data)
         if len(self.audio_frames) == 60:
             print('recording finished')
-            with open('consent_output.mp3', 'wb') as mp3_file:
+            with open('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/consent_output.mp3', 'wb') as mp3_file:
                 for frame in self.audio_frames:
                     mp3_file.write(frame)
             self.audio_subscriber.unregister()
-            text = helpers.speech_to_text('consent_output.mp3')
+            text = helpers.speech_to_text('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/consent_output.mp3')
             print(f"consent given: {text}")
             consent = helpers.call_chatbot_api(text)
             print(f"chatbot response: {consent}")
             if consent == 'yes':
-                play_wav('/home/jr2683/catkin_ws/shutter-prompt.wav')
+                play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/shutter-prompt.wav')
                 self.consent_confirmed_publisher.publish(True)
                 # flag for step 2 of pipeline to start
             else:
-                play_wav('/home/jr2683/catkin_ws/Shutter-sad.wav')
+                play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/Shutter-sad.wav')
             
 
 

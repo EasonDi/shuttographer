@@ -9,16 +9,11 @@ from sensor_msgs.msg import Image
 from visualization_msgs.msg import MarkerArray
 import os
 import portrait_evaluation.inference
+from consent import play_wav
 
 N = 0
 IMG_DIRECTORY = '/home/jr2683/catkin_ws/src/shuttographer/shuttographer/img_folder'
 
-def process_photos(directory):
-    return
-    for filename in os.listdir(directory):
-        file_path = os.path.join(directory, filename)
-        cv2_image = cv2.imread(file_path)
-        portrait_evaluation.inference.get_quality_score(cv2_image)
 
 
 
@@ -40,26 +35,24 @@ class PhotoNode:
         
         # Init the node
         rospy.init_node('photo_node')
-        self.prompt_received = True
+        self.prompt_received = False
+        self.prompt = "A wizard with a wand against a starry background"
         self.scores = []
         rospy.Subscriber('/prompt', String, self.prompt_processing_callback)
-        rospy.Subscriber('/camera/color/image_raw', Image, self.image_processing_callback)
+        self.img_sub = rospy.Subscriber('/camera/color/image_raw', Image, self.image_processing_callback)
         
         rospy.spin()
 
     def prompt_processing_callback(self, prompt):
         self.prompt_received = True
-        # put it through chatgpt bossman
+        self.prompt = prompt
 
     def image_processing_callback(self, image):
         global N
         if self.prompt_received == True:
             if N == 0:
                 empty_directory(IMG_DIRECTORY)
-            N += 1
             if  N % 40 == 0:
-                # Ok, I'm just processing your photographs now!
-                # start sampling images bossman
                 bridge = CvBridge()
                 try:
                     cv2_img = bridge.imgmsg_to_cv2(image, "bgr8")
@@ -70,10 +63,26 @@ class PhotoNode:
                     self.scores.append(score)
                     cv2.imwrite(f'/home/jr2683/catkin_ws/src/shuttographer/shuttographer/img_folder/camera_image_{N}.jpg', cv2_img)
                     print (f'img {N} processed')
-                    print(self.scores)
-                if N == 360:
-                    process_photos(IMG_DIRECTORY)
-                    return
+                    print(self.scores)    
+            if N == 360:
+                self.img_sub.unregister()
+                self.process_photos(IMG_DIRECTORY)
+            N += 1
+                
+    
+    def process_photos(self, directory):
+        max_score = max(self.scores)
+        max_index = self.scores.index(max_score) * 40
+        max_score_path = f'{directory}/camera_image_{max_index}.jpg'
+        image = cv2.imread(max_score_path)
+        resized_image = cv2.resize(image, (1216, 832))
+        cv2.imwrite(max_score_path, resized_image)
+        stable_diffusion_edit(self.prompt, max_score_path)
+        play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/Shutter-show-photo.wav')
+
+
+
+        
             
         
 if __name__ == '__main__':

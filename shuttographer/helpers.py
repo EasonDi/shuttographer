@@ -5,6 +5,8 @@ import json
 import os
 import base64
 
+IMG_DIRECTORY = '/home/jr2683/catkin_ws/src/shuttographer/shuttographer/img_folder'
+
 api_key = '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'
 headers = {
     'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ def call_chatbot_api(text):
             print('llm_response')
             return llm_response
         except:
-            print(f"error at {N}, retrying")
+            print(f"error, retrying")
     llm_response = "API ERROR"
     return llm_response
 
@@ -65,11 +67,9 @@ def stable_diffusion_edit(prompt, image_path):
         raise Exception("Non-200 response: " + str(response.text))
 
     data = response.json()
-    if not os.path.exists("./out"):
-        os.makedirs("./out")
-
+    
     for i, image in enumerate(data["artifacts"]):
-        with open(f'./out/img2img_0.png', "wb") as f:
+        with open(f'{IMG_DIRECTORY}/best_photo.png', "wb") as f:
             f.write(base64.b64decode(image["base64"]))
 
 

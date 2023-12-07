@@ -35,14 +35,14 @@ class AudioRecorder:
     def callback(self, msg):
         self.audio_frames.append(msg.data)
         if len(self.audio_frames) == 100:
-            with open('prompt_output.mp3', 'wb') as mp3_file:
+            with open('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/prompt_output.mp3', 'wb') as mp3_file:
                 for frame in self.audio_frames:
                     mp3_file.write(frame)
             self.audio_subscriber.unregister()
-            text = helpers.speech_to_text('prompt_output.mp3')
+            text = helpers.speech_to_text('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/prompt_output.mp3')
             print(text)
             self.prompt_publisher.publish(text)
-            play_wav('/home/jr2683/catkin_ws/Shutter-enthusiastic.wav')
+            play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/Shutter-enthusiastic.wav')
             return
         
 if __name__ == '__main__':
