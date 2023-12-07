@@ -1,12 +1,12 @@
 <launch>
+    <!-- bring up the camera -->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    </include>
+
     <!-- bring up kinect -->
     <include file="$(find Azure_Kinect_ROS_Driver)/launch/driver.launch">
         <arg name="body_tracking_enabled" value="true" />
         <arg name="overwrite_robot_description" value="false" />
-    </include>
-
-    <!-- bring up the camera -->
-    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
     </include>
 
     <!-- bring up the robot -->
