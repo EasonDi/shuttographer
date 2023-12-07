@@ -41,7 +41,7 @@ class AudioRecorder:
             self.audio_subscriber.unregister()
             text = helpers.speech_to_text('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/prompt_output.mp3')
             print(text)
-            self.prompt_publisher.publish(text)
+            self.prompt_publisher.publish(text['text'])
             play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/Shutter-enthusiastic.wav')
             return
         

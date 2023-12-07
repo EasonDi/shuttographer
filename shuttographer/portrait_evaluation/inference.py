@@ -5,7 +5,7 @@ import os
 import torchvision.transforms as transforms
 import cv2
 
-device = ('cuda' if torch.cuda.is_available() else 'cpu')
+device = ('cpu')
 portrait_model = QualityClassifier().to(device)
 model_url = 'https://drive.google.com/uc?id=1oQKuKN5N33KfSMptlNuNHWqmkrub1SAs'
 out = gdown.download(model_url, os.path.join('.', 'portrait_evaluation_model.pth'))
