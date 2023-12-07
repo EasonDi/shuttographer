@@ -39,7 +39,7 @@ class AudioRecorder:
     def callback(self, msg):
         print('recording started')
         self.audio_frames.append(msg.data)
-        if len(self.audio_frames) == 60:
+        if len(self.audio_frames) == 40:
             print('recording finished')
             with open('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/consent_output.mp3', 'wb') as mp3_file:
                 for frame in self.audio_frames:
