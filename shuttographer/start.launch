@@ -13,9 +13,9 @@
     <include file="$(find shutter_bringup)/launch/shutter_with_face.launch">
     </include>
 
-
-    <exec command="rosservice" args="call /controller_manager/switch_controller '{start_controllers: ['joint_group_controller'], stop_controllers: [], strictness: 1}'" />
-
+    <node pkg="rosservice" type="rosservice" name="shutter_serv" args="call /controller_manager/switch_controller 
+    &quot;{ start_controllers: [joint_group_controller],
+    strictness: 1}&quot;" />
 
     <node name="my_static_tf2_broadcaster" pkg="shuttographer" type="transform_msg.py">
     </node>
