@@ -14,7 +14,7 @@
     </include>
 
     <!-- allow control -->
-    <include file="$(shutter_hardware_interface)/launch/shutter_position_interface.launch">
+    <include file="$(find shutter_hardware_interface)/launch/shutter_position_interface.launch">
     </include>
 
     <node name="my_static_tf2_broadcaster" pkg="shuttographer" type="transform_msg.py">
