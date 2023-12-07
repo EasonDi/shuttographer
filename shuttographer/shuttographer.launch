@@ -79,5 +79,23 @@
   <node name="expert_opt" pkg="shuttographer" type="face_tracking.py">
   </node>
 
+  <node name="consent" pkg="shuttographer" type="consent.py">
+  </node>
+
+  <node name="record_consent" pkg="shuttographer" type="record_consent.py">
+  </node>
+
+  <node name="record_prompt" pkg="shuttographer" type="record_prompt.py">
+  </node>
+
+  <include file="$(find audio_capture)/launch/capture.launch">
+  </include>
+
+  <node name="photo_editing" pkg="shuttographer" type="photo_editing.py">
+  </node>
+
+  <node name="new_person_detector" pkg="shuttographer" type="new_person_detector.py">
+  </node>
+
 </launch>
   <!---->
