@@ -2,7 +2,6 @@
     <!-- bring up kinect -->
     <include file="$(find Azure_Kinect_ROS_Driver)/launch/driver.launch">
         <arg name="body_tracking_enabled" value="true" />
-        <arg name="tf_prefix" value="kinect" />
         <arg name="overwrite_robot_description" value="false">
     </include>
 
