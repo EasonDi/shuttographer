@@ -7,7 +7,6 @@
 
     <!-- bring up the camera -->
     <include file="$(find realsense2_camera)/launch/rs_camera.launch">
-        <arg name="tf_prefix" value="shutter_camera" />
     </include>
 
     <!-- bring up the robot -->
