@@ -25,7 +25,7 @@ if __name__ == '__main__':
     static_transformStamped.child_frame_id = "camera_base"
 
     static_transformStamped.transform.translation.x = -0.2
-    static_transformStamped.transform.translation.y = 0
+    static_transformStamped.transform.translation.y = 0.1
     static_transformStamped.transform.translation.z = 0.545
 
     quat = tf.transformations.quaternion_from_euler(
