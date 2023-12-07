@@ -1,4 +1,4 @@
-from model import QualityClassifier
+from .model import QualityClassifier
 import torch
 import gdown
 import os
