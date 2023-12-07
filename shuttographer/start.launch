@@ -13,7 +13,7 @@
     <include file="$(find shutter_bringup)/launch/shutter_with_face.launch">
     </include>
 
-    <!-- bring up the robot -->
+    <!-- allow control -->
     <include file="$(shutter_hardware_interface)/launch/shutter_position_interface.launch">
     </include>
 
