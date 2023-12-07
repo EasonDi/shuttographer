@@ -1,0 +1,23 @@
+<launch>
+    <!-- bring up kinect -->
+    <include file="$(find Azure_Kinect_ROS_Driver)/launch/driver.launch">
+        <arg name="body_tracking_enabled" value="true" />
+        <arg name="overwrite_robot_description" value="false">
+    </include>
+
+    <!-- bring up the camera -->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    </include>
+
+    <!-- bring up the robot -->
+    <include file="$(find shutter_bringup)/launch/shutter_with_face.launch">
+    </include>
+
+    <!-- publish transform -->
+    <node name="my_static_tf2_broadcaster" pkg="shuttographer" type="transform_msg.py">
+    </node>
+
+    <!-- face tracking -->
+    <node name="expert_opt" pkg="shuttographer" type="face_tracking.py">
+
+</launch>
