@@ -14,6 +14,8 @@ from urdf_parser_py.urdf import URDF
 from visualization_msgs.msg import MarkerArray
 from std_msgs.msg import Bool
 from std_msgs.msg import Float64MultiArray
+# import tensorflow as tf
+
 
 
 def transform_msg_to_T(trans):
@@ -117,7 +119,9 @@ class ExpertNode(object):
         self.nose_detected = True
         self.num_body = -1
         self.person_in_frame = False
-
+       
+        # with tf.device('/cpu:0'):
+        #     self.model = tf.keras.models.load_model('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/model.h5')
 
         # joint subscriber
         rospy.Subscriber('/joint_states', JointState, self.joints_callback, queue_size=5)
@@ -252,10 +256,13 @@ class ExpertNode(object):
                     elif int(marker.id / 100) == self.num_body:
                         pos_transformed = tf2_geometry_msgs.do_transform_pose(marker, trans)
                         position = [pos_transformed.pose.position.x, pos_transformed.pose.position.y, pos_transformed.pose.position.z]
+                        # with tf.device('/cpu:0'):
+                        #     output = self.model.predict(np.asarray([[[position[0],position[1],position[2],self.current_pose[0],self.current_pose[1],self.current_pose[2],self.current_pose[3]]]]))
                         joint_angles = self.compute_joints_position(position, self.current_pose[0], self.current_pose[2])
                         if joint_angles is None:
                             return
                         else:
+                            # a, b, c, new_j4 = output[0]
                             new_j1, new_j3 = joint_angles
                             msg = Float64MultiArray()
                             msg.data = [float(new_j1), float(-1.5), float(new_j3), float(0.0)]
