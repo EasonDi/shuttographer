@@ -9,6 +9,7 @@ import json
 from consent import play_wav
 import simpleaudio as sa
 import helpers
+import string
 
 
 class AudioRecorder:

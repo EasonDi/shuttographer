@@ -76,9 +76,13 @@ class PhotoNode:
         max_score_path = f'{directory}/camera_image_{max_index}.jpg'
         image = cv2.imread(max_score_path)
         resized_image = cv2.resize(image, (1216, 832))
-        cv2.imwrite(max_score_path, resized_image)
-        stable_diffusion_edit(self.prompt, max_score_path)
+        cv2.imwrite(f'{IMG_DIRECTORY}/best_photo_unedited.jpg', resized_image)
+        stable_diffusion_edit(self.prompt, f'{IMG_DIRECTORY}/best_photo_unedited.jpg')
         play_wav('/home/jr2683/catkin_ws/src/shuttographer/shuttographer/audio_files/Shutter-show-photo.wav')
+        best_photo_unedited = cv2.imread(f'{IMG_DIRECTORY}/best_photo_unedited.jpg')
+        cv2.imshow('Your best photo (unedited)', best_photo_unedited)
+        best_photo_edited = cv2.imread(f'{IMG_DIRECTORY}/best_photo.png')
+        cv2.imshow('Your best photo (edited)', best_photo_edited)
 
 
 
