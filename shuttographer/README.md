@@ -12,6 +12,11 @@
 $ roslaunch shuttographer shuttographer.launch
 ```
 
+## Code explained
 
+`audio_files` contains the audio for shutter's responses
 
+`portrait_evaluation` contains codes for training and using protrait evaluation model
+
+`transform_msg.py` creates a Static Transform Broadcaster that publishing the transformation from Kinect `camera_base` to Shutter `base_footprint`
 
