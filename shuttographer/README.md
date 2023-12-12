@@ -14,9 +14,26 @@ $ roslaunch shuttographer shuttographer.launch
 
 ## Code explained
 
+`shuttographer.launch` is the launch file to launch all the nodes. 
+
 `audio_files` contains the audio for shutter's responses
 
 `portrait_evaluation` contains codes for training and using protrait evaluation model
 
 `transform_msg.py` creates a Static Transform Broadcaster that publishing the transformation from Kinect `camera_base` to Shutter `base_footprint`
 
+`face_tracking.py` recieves information from topics `/body_tracking_data` and `/joint_states`, and publishes final Shutter position to topic `/joint_group_controller/command`. The final Shutter position is calculated by geometry, and the formatting of the file is greatly inspired by the code provided in [assignment-2](https://github.com/Yale-BIM/f23-assignments/blob/master/assignment-2/shutter_behavior_cloning/src/expert_opt.py)
+
+`new_person_detector.py` recieves information from topic `/body_tracking_data` and publishes a Bool logic to topic `/new_person` that indicates if a new person is detected by Kinect camera.
+
+`consent.py` recieves information from topic `/new_person` and publishes a Bool logic to `/record` that start the recoding of user's feedback.
+
+`record_consent.py` recieves information from topic `/record` and `/audio/audio` and publishes a Bool logic to topic `/consent_confirmed` that indicates if the user wants Shutter to take a picture.
+
+`record_prompt.py` recieves information from topic `/consent_confirmed` and `/audio/audio` and publishes a String to topic `/prompt` that contains the user's prompt to edit the photo.
+
+`photo_editing.py` recieves information from topic `/prompt` and takes 10 photos over a period of time. Then, it evaluates the photos by the `portrait_evaluation` interface and chooses the best photo to be edited by stable diffusion according to user's prompt. All the photos and edited photo are saved into dictionary `IMG_DIRECTORY`.
+
+`helpers.py` contains helper functions to convert speech to text, access chat gpt to check if user consents to take photos, use stable diffusion to edit the chosen photo.
+
+`model` is the trained behavior cloning model for face tracking. Due to limited GPU memory, we cannot run this model along with all other models.
