@@ -29,13 +29,17 @@ def train(model, trainloader, optimizer, criterion):
     counter += 1
     inputs, labels = inputs.to(device), labels.float().to(device)
     optimizer.zero_grad()
+    # forward pass
     outputs = model(inputs)
+    # calculate loss
     loss = criterion(outputs, labels)
     running_loss += loss.item()
+    # calculate accuracy
     preds, correct = torch.max(outputs, 1)[1], torch.max(labels, 1)[1]
     total_correct += (preds==correct).sum().item()
     loss.backward()
     optimizer.step()
+  # return loss and accuracy for epoch
   epoch_loss = running_loss/counter
   epoch_acc = total_correct/len(trainloader.dl.dataset)
   return epoch_loss, epoch_acc
@@ -66,7 +70,9 @@ if __name__=="__main__":
     batch_size = 64
 
     # Create DataLoaders
+    # CHANGE PATH to root data folder (should have train, validate, test directories)
     train_dataset, val_dataset, test_dataset = get_datasets('/home/bk632/portrait_data/')
+
     train_dl = DataLoader(train_dataset, batch_size, shuffle=True, num_workers=2, pin_memory=True)
     val_dl = DataLoader(val_dataset, batch_size*2, num_workers=2, pin_memory=True)
     test_dl = DataLoader(test_dataset, batch_size*2, num_workers=2, pin_memory=True)

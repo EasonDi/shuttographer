@@ -4,6 +4,7 @@ import os
 import shutil
 
 if __name__=="__main__":
+    # CHANGE PATH to raw data folder and target folder
     data_folder = '/home/bk632/indoor_portraits_labelled'
     new_folder = '/home/bk632/portrait_data/'
     images = []

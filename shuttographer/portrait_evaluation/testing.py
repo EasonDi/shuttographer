@@ -33,13 +33,13 @@ def get_quality_score(image):
     return torch.max(output, 1)[1].item()
 
 if __name__=='__main__':
-    # data = pandas.DataFrame(columns = ['name', 'predicted_score', 'true_score'])
     names = []
     pred_scores = []
     true_scores = []
     total_correct = 0
     within_1 = 0
     batch_size = 64
+    # CHANGE PATH to test dataset folder
     test_dataset = TestDataset('/home/bk632/portrait_data/test', transform)
     for i in range(len(test_dataset)):
         image_name, img, label = test_dataset[i]

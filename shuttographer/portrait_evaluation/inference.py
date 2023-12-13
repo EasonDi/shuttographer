@@ -26,7 +26,3 @@ def get_quality_score(image):
     with torch.no_grad():
         output = portrait_model(image.to(device))
     return torch.max(output, 1)[1].item()
-
-if __name__=='__main__':
-    image = cv2.imread('/home/bk632/portrait_data/test/0/32_Indoor_Scene_0.jpg')
-    print(get_quality_score(image))
