@@ -102,7 +102,7 @@ $ roslaunch shuttographer shuttographer.launch
     ```bash
     $ python3 construct_state_action_pair.py <joint positions txt file> <body tracking txt file> <output json file>
     ```
-- The preprocessed dataset can be found and downloaded at the following [link] (https://drive.google.com/file/d/1A03Kv65b3XdSukEFiKSMytd55Q86Ytni/view?usp=sharing)
+- The preprocessed dataset can be found and downloaded at the following link - https://drive.google.com/file/d/1A03Kv65b3XdSukEFiKSMytd55Q86Ytni/view?usp=sharing
 
 [Train model and save]
 - To train a deep neural network model and save it (change the file paths in behavior_cloning.py to appropriate paths when running)
@@ -112,12 +112,12 @@ $ roslaunch shuttographer shuttographer.launch
     ```
 
 [Trained model]
-- The trained model can be downloaded from the following [link] (https://drive.google.com/file/d/1oDx2ZI67yGIw8qYUnqswkJpYlmQLVEJS/view?usp=sharing)
+- The trained model can be downloaded from the following link - https://drive.google.com/file/d/1oDx2ZI67yGIw8qYUnqswkJpYlmQLVEJS/view?usp=sharing
 
 ## How to run the code -Portrait Evaluation-
 
 [Dataset]
-- The preprocessed dataset from the PIQ23 dataset can be found and downloaded at the following [link] (https://drive.google.com/drive/folders/1Y--YarAXQ50SZWDG647ub-XLYVC2B-p_?usp=drive_link)
+- The preprocessed dataset from the PIQ23 dataset can be found and downloaded at the following link - https://drive.google.com/drive/folders/1Y--YarAXQ50SZWDG647ub-XLYVC2B-p_?usp=drive_link
 
 [Training]
 - To train & save the portrait evaluation model, in train.py and utils.py change the path as directed by comments beginning with 'CHANGE PATH' and run the following -
@@ -132,4 +132,4 @@ $ roslaunch shuttographer shuttographer.launch
     $ python3 testing.py
     ```
 [Trained model]
-- The trained model can be downloaded from the following [link] (https://drive.google.com/file/d/1oQKuKN5N33KfSMptlNuNHWqmkrub1SAs/view?usp=drive_link)
+- The trained model can be downloaded from the following link - https://drive.google.com/file/d/1oQKuKN5N33KfSMptlNuNHWqmkrub1SAs/view?usp=drive_link
