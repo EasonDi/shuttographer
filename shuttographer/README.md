@@ -16,6 +16,12 @@ Imitation Learning
 [scikit-learn](https://github.com/scikit-learn/scikit-learn)
 
 Portrait Evaluation
+[numpy](https://numpy.org/)
+[torch](https://pytorch.org/docs/stable/torch.html)
+[torchvision](https://pytorch.org/vision/stable/index.html)
+[torchvision](https://pandas.pydata.org/)
+[tqdm](https://github.com/tqdm/tqdm)
+[gdown](https://github.com/wkentaro/gdown)
 
 ## How to run the code -Main Driver-
 - This runs the entire system to take portrait photographs. The individual components can also be run/trained/tested in isolation, as described in the next few sections.
