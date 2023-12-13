@@ -17,10 +17,15 @@ Imitation Learning
 
 Portrait Evaluation
 [numpy](https://numpy.org/)
+
 [torch](https://pytorch.org/docs/stable/torch.html)
+
 [torchvision](https://pytorch.org/vision/stable/index.html)
+
 [torchvision](https://pandas.pydata.org/)
+
 [tqdm](https://github.com/tqdm/tqdm)
+
 [gdown](https://github.com/wkentaro/gdown)
 
 ## How to run the code -Main Driver-
