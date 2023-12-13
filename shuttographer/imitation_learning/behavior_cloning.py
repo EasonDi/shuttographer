@@ -72,33 +72,13 @@ def compute_normalization_parameters(data):
     return mean, stdev
 
 def build_model(input_shape):
-    # Build a simple neural network model
-    """
     model = keras.Sequential([
-        keras.layers.Dense(1024, activation='relu', input_shape=(input_shape,)),
-        keras.layers.Dense(512, activation='relu'),
-        keras.layers.Dense(64, activation='softmax'),
+        keras.layers.Dense(64, activation='relu', input_shape=(input_shape,)),
+        keras.layers.Dense(32, activation='relu'),
+        keras.layers.Dense(16, activation='relu'),
         keras.layers.Dense(4)  # Output layer with 2 units for action_1 and action_3
     ])
-    # Validation Loss: [0.024688730016350746, 0.10686945170164108]
-    
-    
-    # LSTM model
-    model = keras.Sequential([
-         keras.layers.LSTM(50, activation='relu', input_shape=(1, 7)),
-         keras.layers.Dense(64, activation='softmax'),
-         keras.layers.Dense(4)
-    ])
-    # Validation Loss: [0.018657149747014046, 0.08205969631671906]
-    """
-    # LSTM model2: Best model so far
-    model = keras.Sequential([
-        keras.layers.Dense(64, activation='relu', input_shape=(1, 7)),
-        keras.layers.Dense(32, activation='relu'),
-        keras.layers.LSTM(32, activation='relu'),
-        keras.layers.Dense(4)
-    ])
-    # Validation Loss: [0.017765656113624573, 0.07670820504426956]
+    # Validation Loss: [0.017627805471420288, 0.07829522341489792]
     return model
 
 def train_model(model, train_input, train_target, val_input, val_target, input_mean, input_stdev,
