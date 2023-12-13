@@ -29,7 +29,7 @@ $ roslaunch shuttographer shuttographer.launch
 
 `portrait_evaluation` contains codes for training and using protrait evaluation model
 
-`imitation_learning` contains codes for training imitation learning model
+`imitation_learning` contains codes for training imitation learning model (See below for details on how to run the imitation learning stream)
 
 `transform_msg.py` creates a Static Transform Broadcaster that publishing the transformation from Kinect `camera_base` to Shutter `base_footprint`
 
