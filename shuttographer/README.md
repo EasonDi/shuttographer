@@ -9,11 +9,11 @@ Main Driver
 
 Imitation Learning
 
-[Tensorflow] (https://github.com/tensorflow/tensorflow)
+[Tensorflow](https://github.com/tensorflow/tensorflow)
 
-[Keras] (https://github.com/keras-team/keras)
+[Keras](https://github.com/keras-team/keras)
 
-[scikit-learn] (https://github.com/scikit-learn/scikit-learn)
+[scikit-learn](https://github.com/scikit-learn/scikit-learn)
 
 ## How to run the code 
 
@@ -28,6 +28,8 @@ $ roslaunch shuttographer shuttographer.launch
 `audio_files` contains the audio for shutter's responses
 
 `portrait_evaluation` contains codes for training and using protrait evaluation model
+
+`imitation_learning` contains codes for training and using imitation learning model
 
 `transform_msg.py` creates a Static Transform Broadcaster that publishing the transformation from Kinect `camera_base` to Shutter `base_footprint`
 
