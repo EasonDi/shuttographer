@@ -27,7 +27,7 @@ $ roslaunch shuttographer shuttographer.launch
 
 `audio_files` contains the audio for shutter's responses
 
-`portrait_evaluation` contains codes for training and using protrait evaluation model
+`portrait_evaluation` contains codes for training and using protrait evaluation model (See below for details on how to train and test the portrait evaluation model)
 
 `imitation_learning` contains codes for training imitation learning model (See below for details on how to run the imitation learning stream)
 
@@ -91,4 +91,18 @@ $ roslaunch shuttographer shuttographer.launch
 
     ```bash
     $ python3 behavior_cloning.py
+    ```
+## How to run the code -Portrait Evaluation-
+
+[Training]
+- To train & save the portrait evaluation model, in train.py and utils.py change the path as directed by comments beginning with 'CHANGE PATH' and run the following -
+ 
+    ```bash
+    $ python3 train.py
+    ```
+[Testing]
+- To test the portrait evaluation model, in testing.py change the path as directed by 'CHANGE PATH' comments and run the following -
+
+    ```bash
+    $ python3 testing.py
     ```
