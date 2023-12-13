@@ -127,3 +127,6 @@ https://drive.google.com/drive/folders/1Y--YarAXQ50SZWDG647ub-XLYVC2B-p_?usp=dri
     ```bash
     $ python3 testing.py
     ```
+[Trained model]
+- The trained model can be downloaded from the following link -
+https://drive.google.com/file/d/1oQKuKN5N33KfSMptlNuNHWqmkrub1SAs/view?usp=drive_link
