@@ -94,6 +94,10 @@ $ roslaunch shuttographer shuttographer.launch
     ```
 ## How to run the code -Portrait Evaluation-
 
+[Dataset]
+- The preprocessed dataset from the PIQ23 dataset can be found and downloaded at the following link - 
+https://drive.google.com/drive/folders/1Y--YarAXQ50SZWDG647ub-XLYVC2B-p_?usp=drive_link
+
 [Training]
 - To train & save the portrait evaluation model, in train.py and utils.py change the path as directed by comments beginning with 'CHANGE PATH' and run the following -
  
