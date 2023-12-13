@@ -15,6 +15,8 @@ Imitation Learning
 
 [scikit-learn](https://github.com/scikit-learn/scikit-learn)
 
+Portrait Evaluation
+
 ## How to run the code -Main Driver-
 - This runs the entire system to take portrait photographs. The individual components can also be run/trained/tested in isolation, as described in the next few sections.
 
