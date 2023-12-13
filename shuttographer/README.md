@@ -25,7 +25,7 @@ Portrait Evaluation
 
 [torchvision](https://pytorch.org/vision/stable/index.html)
 
-[torchvision](https://pandas.pydata.org/)
+[pandas](https://pandas.pydata.org/)
 
 [tqdm](https://github.com/tqdm/tqdm)
 
