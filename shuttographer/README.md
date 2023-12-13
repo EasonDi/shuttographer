@@ -9,6 +9,8 @@ Main Driver
 
 Imitation Learning
 
+[numpy](https://numpy.org/)
+
 [Tensorflow](https://github.com/tensorflow/tensorflow)
 
 [Keras](https://github.com/keras-team/keras)
