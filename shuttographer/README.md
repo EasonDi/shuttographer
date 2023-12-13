@@ -1,10 +1,19 @@
 # CPSC-459/559 Shuttographer README
 
 ## Dependencies
+Main Driver
 
 [Azure Kinect ROS Driver](https://github.com/microsoft/Azure_Kinect_ROS_Driver/tree/melodic)
 
 [Shutter-ROS](https://gitlab.com/interactive-machines/shutter/shutter-ros)
+
+Imitation Learning
+
+[Tensorflow] (https://github.com/tensorflow/tensorflow)
+
+[Keras] (https://github.com/keras-team/keras)
+
+[scikit-learn] (https://github.com/scikit-learn/scikit-learn)
 
 ## How to run the code 
 
@@ -37,3 +46,5 @@ $ roslaunch shuttographer shuttographer.launch
 `helpers.py` contains helper functions to convert speech to text, access chat gpt to check if user consents to take photos, use stable diffusion to edit the chosen photo.
 
 `model` is the trained behavior cloning model for face tracking. Due to limited GPU memory, we cannot run this model along with all other models.
+ 
+

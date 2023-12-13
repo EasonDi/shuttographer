@@ -71,26 +71,6 @@ def compute_normalization_parameters(data):
 
     return mean, stdev
 
-
-def normalize_data_per_row(data, mean, stdev):
-    """
-    Normalize a give matrix of data (samples must be organized per row)
-    :param data: input data
-    :param mean: mean for normalization
-    :param stdev: standard deviation for normalization
-    :return: whitened data, (data - mean) / stdev
-    """
-
-    # sanity checks!
-    assert len(data.shape) == 2, "Expected the input data to be a 2D matrix"
-    assert data.shape[1] == mean.shape[1], "Data - Mean size mismatch ({} vs {})".format(data.shape[1], mean.shape[1])
-    assert data.shape[1] == stdev.shape[1], "Data - StDev size mismatch ({} vs {})".format(data.shape[1], stdev.shape[1])
-
-    centered = data - np.tile(mean, (data.shape[0], 1))
-    normalized_data = np.divide(centered, np.tile(stdev, (data.shape[0],1)))
-
-    return normalized_data
-
 def build_model(input_shape):
     # Build a simple neural network model
     """
@@ -121,18 +101,6 @@ def build_model(input_shape):
     # Validation Loss: [0.017765656113624573, 0.07670820504426956]
     return model
 
-    
-
-
-    # model = keras.Sequential([
-    #     keras.layers.Dense(32, activation='relu', input_shape=(input_shape,)),
-    #     keras.layers.Dense(32, activation='relu'),
-    #     keras.layers.Dense(2)  # Output layer with 2 units for action_1 and action_3
-    # ])
-    # return model
-
-
-
 def train_model(model, train_input, train_target, val_input, val_target, input_mean, input_stdev,
                 epochs=20, learning_rate=0.001, batch_size=16):
     """
@@ -148,10 +116,6 @@ def train_model(model, train_input, train_target, val_input, val_target, input_m
     :param learning_rate: learning rate for gradient descent
     :param batch_size: batch size for training with gradient descent
     """
-
-    # normalize
-    #norm_train_input = normalize_data_per_row(train_input, input_mean, input_stdev)
-    #norm_val_input = normalize_data_per_row(val_input, input_mean, input_stdev)
 
     # compile the model: define optimizer, loss, and metrics
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
