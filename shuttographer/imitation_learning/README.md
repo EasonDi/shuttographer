@@ -44,6 +44,7 @@
     ```bash
     $ python3 construct_state_action_pair.py <joint positions txt file> <body tracking txt file> <output json file>
     ```
+- The preprocessed dataset can be found and downloaded at the following link - https://drive.google.com/file/d/1A03Kv65b3XdSukEFiKSMytd55Q86Ytni/view?usp=sharing
 
 [Train model and save]
 - To train a deep neural network model and save it (change the file paths in behavior_cloning.py to appropriate paths when running)
@@ -51,3 +52,6 @@
     ```bash
     $ python3 behavior_cloning.py
     ```
+
+[Trained model]
+- The trained model can be downloaded from the following link - https://drive.google.com/file/d/1oDx2ZI67yGIw8qYUnqswkJpYlmQLVEJS/view?usp=sharing
