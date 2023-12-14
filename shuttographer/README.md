@@ -19,35 +19,35 @@ Worked on implementing face tracking algorithm, extracting body joints informati
 Worked on the Portrait Evaluation Model - did literature review and picked new dataset after we decided the original dataset would not work for the project. Setup and preprocessed dataset to prep for training. Trained and tested the portrait evaluation model, and created interface for integration with the rest of the pipeline. Also worked with Eason on integrating the imitation learning model with the rest of the pipeline.
 
 ## Dependencies
-Main Driver
+- Main Driver
 
-[Azure Kinect ROS Driver](https://github.com/microsoft/Azure_Kinect_ROS_Driver/tree/melodic)
+    [Azure Kinect ROS Driver](https://github.com/microsoft/Azure_Kinect_ROS_Driver/tree/melodic)
 
-[Shutter-ROS](https://gitlab.com/interactive-machines/shutter/shutter-ros)
+    [Shutter-ROS](https://gitlab.com/interactive-machines/shutter/shutter-ros)
 
-Imitation Learning
+- Imitation Learning
 
-[numpy](https://numpy.org/)
+    [numpy](https://numpy.org/)
 
-[Tensorflow](https://github.com/tensorflow/tensorflow)
+    [Tensorflow](https://github.com/tensorflow/tensorflow)
 
-[Keras](https://github.com/keras-team/keras)
+    [Keras](https://github.com/keras-team/keras)
 
-[scikit-learn](https://github.com/scikit-learn/scikit-learn)
+    [scikit-learn](https://github.com/scikit-learn/scikit-learn)
 
-Portrait Evaluation
+- Portrait Evaluation
 
-[numpy](https://numpy.org/)
+    [numpy](https://numpy.org/)
 
-[torch](https://pytorch.org/docs/stable/torch.html)
+    [torch](https://pytorch.org/docs/stable/torch.html)
 
-[torchvision](https://pytorch.org/vision/stable/index.html)
+    [torchvision](https://pytorch.org/vision/stable/index.html)
 
-[pandas](https://pandas.pydata.org/)
+    [pandas](https://pandas.pydata.org/)
 
-[tqdm](https://github.com/tqdm/tqdm)
+    [tqdm](https://github.com/tqdm/tqdm)
 
-[gdown](https://github.com/wkentaro/gdown)
+    [gdown](https://github.com/wkentaro/gdown)
 
 ## How to run the code -Main Driver-
 - This runs the entire system to take portrait photographs. The individual components can also be run/trained/tested in isolation, as described in the next few sections.
