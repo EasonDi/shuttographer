@@ -56,7 +56,7 @@ Worked on the Portrait Evaluation Model - did literature review and picked new d
 $ roslaunch shuttographer shuttographer.launch
 ```
 
-## Code explained
+## File Descriptions
 
 `shuttographer.launch` is the launch file to launch all the nodes. 
 
