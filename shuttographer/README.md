@@ -1,5 +1,19 @@
 # CPSC-459/559 Shuttographer README
 
+## Contributions
+
+- Tetsu Kurumisawa
+Worked on the OpenCV approach in imitation learning, identifying problems in the plan we had for the and updated the plan/testing the Shutter environment accordingly. Once we decied not to use the RL stream, focused on implementing the imitation learning model. Collected data of demonstrations by humans to frame a subject, processed data to construct state action pairs, and trained the imitation learning model. Helped work on the implementation of the pipeline onto Shutter in the lab. Filmed and edited the demo video. Sent video & survey form to friends to qualitatively assess project. 
+
+- James Rosen
+Worked on Shuttographer's core interactivity, including detecting subjects in the Kinect camera frame, asking participants for consent and processing their responses. Also worked on extracting frames from Shutter's camera for processing by the portrait evaluation model, and implemented the Stable Diffusion pipeline. Integrated all components of Shuttographer together. Also acted as the photography subject for data collection in the imitation learning phase. 
+
+- Eason Ding
+Worked on implementing face tracking algorithm, extracting body joints information from Kinect camera, designing the finite state machine for face tracking component, creating the static Transformation broadcaster from Kinect to Shutter, writing the launch file that runs the whole pipline.
+
+- Bhavya Kasera
+Worked on the Portrait Evaluation Model - did literature review and picked new dataset after we decided the original dataset would not work for the project. Setup and preprocessed dataset to prep for training. Trained and tested the portrait evaluation model, and created interface for integration with the rest of the pipeline. Also worked with Eason on integrating the imitation learning model with the rest of the pipeline.
+
 ## Dependencies
 Main Driver
 
